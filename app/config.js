@@ -20,7 +20,10 @@ export const INPUT_FILTER_DELAY = 300; // ms, dalay before filtering projects, l
 export const PLATFORMIO_API_ENDPOINT = 'http://api.platformio.org';
 
 let wsrpc = 'ws://127.0.0.1:8008/wsrpc';
+
 if (process.env.NODE_ENV === 'production' && window.location && window.location.host) {
-  wsrpc = `ws://${window.location.host}/wsrpc`;
+  const wsproto = window.location.protocol === 'https:' ? 'wss' : 'ws';
+  wsrpc = `${wsproto}://${window.location.host}${window.location.pathname}wsrpc`;
 }
+
 export const BACKEND_ENDPOINT = wsrpc;
